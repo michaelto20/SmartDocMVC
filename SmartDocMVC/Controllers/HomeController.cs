@@ -5,11 +5,14 @@ using System.Web;
 using System.Web.Mvc;
 using System.IO;
 using SmartDocMVC.Code;
+using SmartDocMVC.Data;
 
 namespace SmartDocMVC.Controllers
 {
     public class HomeController : Controller
     {
+        Student stud = new Student();
+        string path = "";
         public ActionResult Index()
         {
             return View();
@@ -23,12 +26,23 @@ namespace SmartDocMVC.Controllers
                 if (file.ContentLength > 0)
                 {
                     var fileName = Path.GetFileName(file.FileName);
-                    var path = Path.Combine(Server.MapPath("~/App_Data/Upload"), fileName);
+                    path = Path.Combine(Server.MapPath("~/App_Data/Upload"), fileName);
                     file.SaveAs(path);
 
-                    string fields = ValidateSmartDoc.ParseSmartDoc(fileName);
-                    ViewBag.Preview = fields;
-                    //context.Response.Write(fields);
+                    stud = ValidateSmartDoc.ParseSmartDoc(fileName);
+
+                    if (stud != null)
+                    {
+
+                        ViewBag.Message = "First Name: " + stud.FirstName + "\\n" +
+                                          "Last Name: " + stud.LastName + "\\n" +
+                                          "Age: " + stud.Age.ToString();
+                    }else
+                    {
+                        ViewBag.Message = "Could not validate your document.";
+                    }
+
+                    
                 }
                 
             }
@@ -41,43 +55,27 @@ namespace SmartDocMVC.Controllers
 
         }
 
-        //[HttpPost]
-        //public ActionResult Index(HttpContext context)
-        //{
-        //    try
-        //    {
-        //        string path = context.Request["path"];
+        [HttpPost]
+        public ActionResult UpdateDB(bool save)
+        {
+            if (save)
+            {
+                using (DataModel db = new DataModel())
+                {
+                    db.Students.Add(stud);
+                    db.SaveChanges();
+                }
+            }else
+            {
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+            }
+            return View();
+        }
 
-        //        // Put smart doc in uploads folder but first
-        //        // check to make sure there isn't a file with the
-        //        // same name already there.  If there is delete it.
-        //        FileInfo fn = new FileInfo(path);
-        //        string filename = context.Server.MapPath("~/Upload/" + fn.Name);
-        //        if (System.IO.File.Exists(filename))
-        //        {
-        //            System.IO.File.Delete(filename);
-        //        }
-
-        //        fn.CopyTo(filename);
-        //        //Parser parser = new Parser(fn.Name);
-
-        //        //string fields = ValidateSmartDoc.ParseSmartDoc(fn.Name);
-        //        //context.Response.Write(fields);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //    }
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //public ActionResult Index(string str)
-        //{
-        //    return View();
-        //}
-
-
+       
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

@@ -6,33 +6,17 @@ using System.Xml.Linq;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartDocMVC.Models;
-
+using SmartDocMVC.Model;
+using SmartDocMVC.Data;
 
 
 namespace SmartDocMVC.Code
 {
     public class ValidateSmartDoc
     {
-        public static string ParseSmartDoc(string smartDocFileName)
+        public static Student ParseSmartDoc(string smartDocFileName)
         {
-            //try
-            //{
-            //    // Initialize database connection
-            //    //using (var db = new StudentContext())
-            //    //{
-            //    //    //Student stud = new Student("Michael", "Townsend", 33);
-            //    //    //db.Students.Add(stud);
-            //    //    //db.SaveChanges();
-            //    //    var query = from b in db.Students
-            //    //                select b;
-            //    //    return query.ToString();
-            //    //}
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //}
+            
             try
             {
                 // Read a docx file and parse it.
@@ -61,8 +45,8 @@ namespace SmartDocMVC.Code
                 if (doc1.Equals(doc2))
                 {
 
-                    List<FieldAttributes> fieldAttributes = sdParser.GetFields();
-                    List<FieldValues> fieldValues = sdParser.GetValues(xdoc.ToString());
+                    List<FieldAttribute> fieldAttributes = sdParser.GetFields();
+                    List<FieldValue> fieldValues = sdParser.GetValues(xdoc.ToString());
 
                     if (CompareXML(fieldValues, fieldAttributes))
                     {
@@ -75,21 +59,22 @@ namespace SmartDocMVC.Code
                 Console.WriteLine(ex.Message);
             }
 
-            return "Could not validate your document.";
+            return null;
+            //return "Could not validate your document.";
         }
 
-        public static bool CompareXML(List<FieldValues> fieldValues, List<FieldAttributes> fieldAttributes)
+        public static bool CompareXML(List<FieldValue> fieldValues, List<FieldAttribute> fieldAttributes)
         {
             for (int i = 0; i < fieldValues.Count; i++)
             {
-                if (fieldValues[i].FieldName.Equals(fieldAttributes[i].FieldName))
+                if (fieldValues[i].Name.Equals(fieldAttributes[i].FieldName))
                 {
-                    if (fieldAttributes[i].IsRequired && String.IsNullOrWhiteSpace(fieldValues[i].FieldValue))
+                    if (fieldAttributes[i].IsRequired && String.IsNullOrWhiteSpace(fieldValues[i].Value))
                     {
                         return false;
                     }
                     int num;
-                    if (fieldAttributes[i].DataType.Equals("Integer") && !int.TryParse(fieldValues[i].FieldValue, out num))
+                    if (fieldAttributes[i].DataType.Equals("Integer") && !int.TryParse(fieldValues[i].Value, out num))
                     {
                         return false;
                     }
@@ -103,15 +88,16 @@ namespace SmartDocMVC.Code
             return true;
         }
 
-        public static string Preview(List<FieldValues> fieldValues)
+        public static Student Preview(List<FieldValue> fieldValues)
         {
-            string text = "";
+            //string text = "";
 
-            for (int i = 0; i < fieldValues.Count && i < 3; i++)
-            {
-                text = text + fieldValues[i].FieldName + ": " + fieldValues[i].FieldValue + "\\n";
-            }
-            return text;
+            //for (int i = 0; i < fieldValues.Count && i < 3; i++)
+            //{
+            //   text = text + fieldValues[i].Name + ": " + fieldValues[i].Value + "\\n";
+            //}
+            //return text;
+            return new Student(fieldValues[0].Value,fieldValues[1].Value,Convert.ToInt32(fieldValues[2].Value));
         }
     }
 }

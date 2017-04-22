@@ -33,7 +33,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.Plusbtn = new System.Windows.Forms.Button();
             this.Createbtn = new System.Windows.Forms.Button();
-            this.Cancelbtn = new System.Windows.Forms.Button();
             this.mainLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.DBNameTxtbx = new System.Windows.Forms.TextBox();
@@ -107,7 +106,7 @@
             // Createbtn
             // 
             this.Createbtn.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.Createbtn.Location = new System.Drawing.Point(728, 550);
+            this.Createbtn.Location = new System.Drawing.Point(524, 550);
             this.Createbtn.Name = "Createbtn";
             this.Createbtn.Padding = new System.Windows.Forms.Padding(5);
             this.Createbtn.Size = new System.Drawing.Size(138, 33);
@@ -115,18 +114,6 @@
             this.Createbtn.Text = "Create Smart Doc";
             this.Createbtn.UseVisualStyleBackColor = false;
             this.Createbtn.Click += new System.EventHandler(this.Createbtn_Click);
-            // 
-            // Cancelbtn
-            // 
-            this.Cancelbtn.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.Cancelbtn.Location = new System.Drawing.Point(361, 550);
-            this.Cancelbtn.Name = "Cancelbtn";
-            this.Cancelbtn.Padding = new System.Windows.Forms.Padding(5);
-            this.Cancelbtn.Size = new System.Drawing.Size(75, 33);
-            this.Cancelbtn.TabIndex = 6;
-            this.Cancelbtn.Text = "Cancel";
-            this.Cancelbtn.UseVisualStyleBackColor = false;
-            this.Cancelbtn.Click += new System.EventHandler(this.Cancelbtn_Click);
             // 
             // mainLayoutPanel
             // 
@@ -285,7 +272,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1177, 637);
             this.Controls.Add(this.mainLayoutPanel);
-            this.Controls.Add(this.Cancelbtn);
             this.Controls.Add(this.Createbtn);
             this.Controls.Add(this.Title);
             this.Controls.Add(this.panel1);
@@ -311,7 +297,6 @@
         private System.Windows.Forms.TextBox ToolboxTxtbx;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button Createbtn;
-        private System.Windows.Forms.Button Cancelbtn;
         private System.Windows.Forms.Button Plusbtn;
         private System.Windows.Forms.FlowLayoutPanel mainLayoutPanel;
         private System.Windows.Forms.GroupBox FieldGrp;

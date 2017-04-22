@@ -13,7 +13,7 @@ using System.Xml.Serialization;
 using DocumentFormat;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
-using SmartDocMVC.Models;
+using SmartDocMVC.Model;
 
 
 namespace SmartDocMVC.Code
@@ -58,9 +58,9 @@ namespace SmartDocMVC.Code
 
         }
 
-        public List<FieldValues> GetValues(string xdoc)
+        public List<FieldValue> GetValues(string xdoc)
         {
-            List<FieldValues> fieldValues = new List<FieldValues>();
+            List<FieldValue> fieldValues = new List<FieldValue>();
             doc.LoadXml(xdoc);
 
             foreach (XmlNode root in doc.DocumentElement.ChildNodes)
@@ -69,7 +69,7 @@ namespace SmartDocMVC.Code
                 {
                     string fieldName = node.Attributes["DisplayName"]?.InnerText.Trim();
                     string value = node.InnerText;
-                    FieldValues fieldValue = new FieldValues(fieldName, value);
+                    FieldValue fieldValue = new FieldValue(fieldName, value);
                     fieldValues.Add(fieldValue);
                 }
             }
@@ -79,10 +79,10 @@ namespace SmartDocMVC.Code
 
         }
 
-        public List<FieldAttributes> GetFields()
+        public List<FieldAttribute> GetFields()
         {
             doc.Load(HttpContext.Current.Server.MapPath("~/App_Data/XMLTemplates/" + templateName));
-            List<FieldAttributes> fields = new List<FieldAttributes>();
+            List<FieldAttribute> fields = new List<FieldAttribute>();
 
             foreach (XmlNode root in doc.DocumentElement.ChildNodes)
             {
@@ -94,7 +94,7 @@ namespace SmartDocMVC.Code
                     string Required = node.Attributes["Required"]?.InnerText;
                     isRequired = Required.Equals("true");
                     string fieldName = node.Attributes["DisplayName"]?.InnerText.Trim();
-                    FieldAttributes field = new FieldAttributes(fieldName, dataType, isRequired);
+                    FieldAttribute field = new FieldAttribute(fieldName, dataType, isRequired);
                     fields.Add(field);
                 }
             }
