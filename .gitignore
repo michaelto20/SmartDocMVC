@@ -3,6 +3,7 @@
 ################################################################################
 
 SmartDocMVC/bin
+SmartDocMVC/obj
 SmartDocSystem/obj
 SmartDocSystem/bin
 packages/
