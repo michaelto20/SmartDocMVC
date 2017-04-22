@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartDocMVC", "SmartDocMVC\SmartDocMVC.csproj", "{EB0118C4-0023-49E2-8324-6168D76C6DA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartDocSystem", "SmartDocSystem\SmartDocSystem.csproj", "{B1369036-9E40-4664-8710-F2E845759461}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB0118C4-0023-49E2-8324-6168D76C6DA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB0118C4-0023-49E2-8324-6168D76C6DA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB0118C4-0023-49E2-8324-6168D76C6DA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB0118C4-0023-49E2-8324-6168D76C6DA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1369036-9E40-4664-8710-F2E845759461}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1369036-9E40-4664-8710-F2E845759461}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1369036-9E40-4664-8710-F2E845759461}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1369036-9E40-4664-8710-F2E845759461}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

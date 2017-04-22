@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+SmartDocMVC/bin
+SmartDocSystem/obj
+SmartDocSystem/bin
+packages/
+.vs

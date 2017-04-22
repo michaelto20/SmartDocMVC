@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<People SDTemplate="People_Person.xml">
+  <Person>
+    <fName Datatype="String" Required="true" DisplayName="First Name">Your Answer here</fName>
+    <lName Datatype="String" Required="true" DisplayName="Last Name">Your Answer here</lName>
+    <Age Datatype="Integer" Required="false" DisplayName="Age">Your Answer here</Age>
+  </Person>
+</People>

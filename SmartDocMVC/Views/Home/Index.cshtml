@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<div class="container">
+    <h2>Smart Document Upload Center</h2>
+
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post,
+            new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <fieldset>
+            <legend>Upload a file</legend>
+            <div class="editor-field">
+                @Html.TextBox("file", "", new { type = "file" })
+            </div>
+            <div class="editor-field">
+                <input type="submit" value="Upload" id="btnUpload"/>
+            </div>
+        </fieldset>
+    }
+    @*<form method="post" enctype="multipart/form-data">
+        <form action="~/Home/Index" method="post" id="Index" enctype="multipart/form-data">
+            <input type="file" id="file-select" name="context" onchange="show(this)" />
+            <input type="text" id="strs" />
+            <div class="container" style="padding:10px">
+                <input type="submit" value="Show Preview" id="btnUpload" class="btn" />
+            </div>
+        </form>*@
+</div>
+<div class="container" style="padding:10px">
+    <button id="submit">Upload</button>
+    <button id="cancel">Cancel</button>
+</div>
+<div id="dialog" title="Basic dialog">
+    <p></p>
+</div>
+
+
+<script type="text/javascript">
+    var $submit = false;
+    var path = null;
+
+    $(document).ready(function () {
+        $("#cancel").hide();
+        $("#submit").hide();
+        $("#cancel").click(function () {
+            location.reload();
+        });
+
+        // Display preview if there is one
+        var preview = "@ViewBag.Preview";
+        if (preview != null && preview != "") {
+            $(function () {
+                alert(preview);
+                //$('#dialog > p:eq(0)').text = preview;
+                //$("#dialog").dialog();
+            });
+        }
+
+        $("#btnUpload").click(function () {
+            $.post("http://localhost:60637/UploadHandler.ashx", { path: path }, function (data) {
+
+                var d = data;
+                if (d != "Could not validate your document.") {
+                    $("#cancel").show();
+                    $("#submit").show();
+                    $("#btnUpload").hide();
+                }
+                alert(d);
+            });
+        });
+
+    });
+
+    function show(e) {
+        path = e.value;
+    }
+
+    //Read text file and preview data in a pop up box
+    var openFile = function(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function(){
+            var text = reader.result;
+            $("#submit").click(function(){
+                if(!$submit)
+                {
+                alert("First Name: \nLast Name: \nComments: ");
+                // $("#submit").html('Submit');
+                $submit = true;
+                }
+                else{
+                $submit = false;
+                location.reload();
+                }
+            });
+        };
+    reader.readAsText(input.files[0]);
+    };
+
+</script>
