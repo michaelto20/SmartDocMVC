@@ -33,7 +33,7 @@ namespace SmartDocMVC.Controllers
 
                     if (stud != null)
                     {
-
+                        TempData["stud"] = stud;
                         ViewBag.Message = "First Name: " + stud.FirstName + "\\n" +
                                           "Last Name: " + stud.LastName + "\\n" +
                                           "Age: " + stud.Age.ToString();
@@ -60,6 +60,7 @@ namespace SmartDocMVC.Controllers
         {
             if (save)
             {
+                stud = (Student)TempData["stud"];
                 using (DataModel db = new DataModel())
                 {
                     db.Students.Add(stud);

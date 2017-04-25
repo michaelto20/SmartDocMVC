@@ -20,7 +20,7 @@
                 @Html.TextBox("file", "", new { type = "file" })
             </div>
             <div class="editor-field">
-                <input type="submit" value="Upload" id="btnUpload"/>
+                <input type="submit" value="Show Preview" id="btnUpload"/>
             </div>
         </fieldset>
     }
@@ -50,6 +50,12 @@
                     $("#cancel").show();
                     $("#submit").show();
                     $("#btnUpload").hide();
+                }
+                if (message == "Upload failed")
+                {
+                    $("#cancel").hide();
+                    $("#submit").hide();
+                    $("#btnUpload").show();
                 }
                 alert(message);
             });
