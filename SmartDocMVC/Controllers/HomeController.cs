@@ -25,8 +25,13 @@ namespace SmartDocMVC.Controllers
             {
                 if (file.ContentLength > 0)
                 {
+                    
                     var fileName = Path.GetFileName(file.FileName);
                     path = Path.Combine(Server.MapPath("~/App_Data/Upload"), fileName);
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
                     file.SaveAs(path);
 
                     stud = ValidateSmartDoc.ParseSmartDoc(fileName);

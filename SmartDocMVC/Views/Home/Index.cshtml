@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    ViewBag.path = "";
 }
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -17,11 +18,12 @@
         <fieldset>
             <legend>Upload a file</legend>
             <div class="editor-field">
-                @Html.TextBox("file", "", new { type = "file" })
+                @Html.TextBox("file", "", new { type = "file", id = "path" })
             </div>
             <div class="editor-field">
                 <input type="submit" value="Show Preview" id="btnUpload"/>
             </div>
+            <div>@ViewBag.path</div>
         </fieldset>
     }
 </div>
@@ -29,6 +31,7 @@
     <button id="submit">Upload</button>
     <button id="cancel">Cancel</button>
 </div>
+<div id="displaypath"></div>
 
 
 <script type="text/javascript">
@@ -46,26 +49,40 @@
         var message = "@ViewBag.Message";
         if (message != null && message != "") {
             $(function () {
-                if (message != "Could not validate your document.") {
-                    $("#cancel").show();
-                    $("#submit").show();
-                    $("#btnUpload").hide();
+                if (message == "Could not validate your document.") {
+                    $("#cancel").hide();
+                    $("#submit").hide();
+                    $("#btnUpload").show();
+                    
                 }
-                if (message == "Upload failed")
+                else if (message == "Upload failed")
                 {
                     $("#cancel").hide();
                     $("#submit").hide();
                     $("#btnUpload").show();
+                } else {
+                    $("#cancel").show();
+                    $("#submit").show();
+                    $("#btnUpload").hide();
+
+                    var path1 = localStorage.getItem("path");
+                    $("#displaypath").text(path1);
                 }
+                
                 alert(message);
             });
         }
 
+        $('#btnUpload').click(function () {
+            var path = $("#path").val();
+            $("#displaypath").text(path);
+
+        });
+
         $("#submit").click(function () {
             $.post("/Home/UpdateDB", { save: true }, function () {
-
-            });
-
+                });
+            $("#displaypath").text("");
             alert("Your SmartDoc has been uploaded!");
             // Don't reload the page
             event.preventDefault();
@@ -78,7 +95,7 @@
             $.post("/Home/UpdateDB", { save: false }, function () {
 
             });
-
+            $("#displaypath").text("");
             alert("Your SmartDoc has NOT been uploaded!");
             // Don't reload the page
             event.preventDefault();
